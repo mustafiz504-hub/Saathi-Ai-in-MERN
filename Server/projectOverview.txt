@@ -1,0 +1,30 @@
+**Commands jo use hui:**
+
+- `npm install @react-oauth/google`: Google se login/authentication ke liye yeh main library install ki.
+- `npm install clsx tailwind-merge`: Yeh 2 libraries `shadcn-ui` ko support karne ke liye install ki.
+- `npx shadcn@latest init`: Is command se `shadcn-ui` ko project me setup karte hain. Isne aapse kuch sawal puche honge.
+- `npx shadcn@latest add button`: Is command se `shadcn-ui` ka 'button' component project me add kiya.
+
+---
+
+**Google Authentication ka Progress:**
+
+1.  **Client-Side Setup:** Humne `@react-oauth/google` library ka `useGoogleLogin` hook use kiya hai. Yeh hook React component ke andar Google login ka logic handle karta hai.
+
+2.  **Login Flow:**
+   - Jab user "Login with Google" button pe click karta hai, to `googleLogin()` function call hota hai (jo `useGoogleLogin` hook se mila hai).
+   - Iske baad Google ka login screen (popup) open hota hai.
+
+3.  **Success & Response:**
+   - User jab successfully login kar leta hai, to `onSuccess` wala function trigger hota hai.
+   - Is function me hume Google se ek `authResult` object milta hai. Is object ke andar ek `code` property hoti hai.
+   - `flow: "auth-code"` setting ki wajah se hume yeh `code` mil raha hai.
+
+4.  **Abhi Tak ka Status:**
+   - **Client-side authentication complete hai.** User Google se successfully authorize kar pa raha hai.
+   - Hume client-side par (console me) authorization `code` mil chuka hai.
+
+5.  **Next Step (Jo karna baaki hai):**
+   - Abhi yeh `code` sirf client (browser) tak hai. Iska use karke **server-side** par user ki details (jaise naam, email, profile picture) nikalni hai.
+   - Iske liye, hume is `code` ko apne server (jo 'Server' folder me banega) pe ek API call ke through bhejna hoga.
+   - Server uss code ko Google ke server pe bhej kar `access_token` lega aur fir uss token se user ki profile details fetch karega.
