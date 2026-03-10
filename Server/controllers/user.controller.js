@@ -31,7 +31,11 @@ export const signup = async (req, res) => {
       createTokenAndSaveCookie(newUser._id, res);
       return res.status(201).json({
         message: "User registered successfully",
-        newUser,
+        user: {
+          _id: newUser._id,
+          name: newUser.name,
+          email: newUser.email,
+        },
       });
     }
   } catch (err) {
