@@ -32,7 +32,7 @@ const GoogleLogin = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white rounded-lg shadow p-8 w-full max-w-sm">
-        <h2 className="text-xl font-semibold text-center mb-2">Welcome back</h2>
+        <h2 className="text-xl font-semibold text-gray-600 text-center mb-2">Welcome back</h2>
         <p className="text-sm text-gray-500 text-center mb-6">
           Sign in with your Google account to continue
         </p>

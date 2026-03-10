@@ -23,12 +23,12 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<GoogleAuthWrapper />} />
-        <Route path="/" element={<Navigate to="/login" />} />
-        <Route
+        {/* <Route path="/login" element={<GoogleAuthWrapper />} /> */}
+        {/* <Route path="/" element={<Navigate to="/login" />} /> */}
+        {/* <Route
           path="/dashboard"
           element={<PrivateRoute element={<Dashboard />} />}
-        />
+        /> */}
         <Route path="/*" element={<PageNotFound />} />
         <Route path="/chat" element={<Chat />} />
       </Routes>
