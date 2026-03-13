@@ -2,8 +2,11 @@ import { useForm } from "react-hook-form";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../../api";
+import { useAuth } from "../context/AuthProvider";
+
 
 const Signup = () => {
+  const { setAuthUser } = useAuth();
   const {
     register,
     handleSubmit,
@@ -28,6 +31,7 @@ const Signup = () => {
       }
 
       localStorage.setItem("messenger", JSON.stringify(response.data));
+      setAuthUser(response.data);
     } catch (error) {
       console.log("Full error:", error);
       console.log("Error response:", error?.response);
@@ -329,3 +333,5 @@ const Signup = () => {
 };
 
 export default Signup;
+
+
