@@ -21,9 +21,28 @@ Ye README Hinglish me maintain kiya gaya hai, taaki abhi tak kya bana hai aur se
 4. Google login component integrated hai (`@react-oauth/google`).
 5. Dashboard UI ready hai (name/email/avatar localStorage se read hota hai).
 6. Chat component me old full layout code present hai, lekin abhi comment mode me.
-7. Current active routes mainly:
+7. Login form backend `POST /auth/login` ke saath connected hai.
+8. `AuthProvider` + `useAuth` context add kiya gaya hai auth state share karne ke liye.
+9. App root ko `AuthProvider` se wrap kiya gaya hai, taaki global auth state available rahe.
+10. Login aur Signup dono API response ko `localStorage("messenger")` ke saath auth context me bhi sync karte hain.
+11. Initial auth state cookie `jwt` ya localStorage se read hoti hai (`js-cookies` use karke).
+12. Current active routes mainly:
    - `/chat`
    - `/*` (PageNotFound fallback)
+13. Current testing flow me `Chat.jsx` temporary taur par `Signup` aur `Login` components render kar raha hai.
+
+## 2.1) Client Auth Flow (Naya)
+
+1. `Client/src/context/AuthProvider.jsx`
+   - `AuthContext` create karta hai
+   - `authUser` aur `setAuthUser` expose karta hai
+   - startup par `jwt` cookie ya `messenger` localStorage se user state hydrate karta hai
+2. `Client/src/main.jsx`
+   - pure app ko `AuthProvider` se wrap karta hai
+3. `Client/src/components/Login.jsx`
+   - successful login ke baad response ko localStorage aur auth context dono me save karta hai
+4. `Client/src/components/Signup.jsx`
+   - successful signup ke baad response ko localStorage aur auth context dono me save karta hai
 
 ## 3) Server Route Mapping
 
@@ -124,8 +143,8 @@ Base route: `/auth`
 
 ## 7) Pending Work (Recommended Next)
 
-1. `Login.jsx` ko backend `POST /auth/login` se connect karna.
-2. `App.jsx` me login/dashboard/private route flow activate karna.
+1. `App.jsx` me login/dashboard/private route flow activate karna.
+2. `Chat.jsx` me temporary `Signup`/`Login` rendering hata kar actual auth-based screen switch restore karna.
 3. `secure: "strict"` ko cookie config me proper boolean strategy ke saath revise karna (dev/prod basis).
 4. Error handling standardize karna:
    - backend key mostly `message` hai, to frontend me `error.response.data.message` use karo.
