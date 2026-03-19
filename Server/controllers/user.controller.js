@@ -87,3 +87,22 @@ export const logout = async (req, res) => {
     });
   }
 };
+
+export const getUserProfile = async (req, res) => {
+  try {
+    const loggedInUser = req.User._id;
+    const filteredUsers = await UserModel2.find({
+      _id: { $ne: loggedInUser },
+    }).select("-password");
+    //"-password" isse hame password nahi milega jab ham data get karege
+    return res.status(200).json({
+      message: "Users fetched successfully",
+      users: filteredUsers,
+    });
+  } catch (error) {
+    console.log("Error in allUsers Controller", error);
+    return res.status(500).json({
+      message: "Server Error",
+    });
+  }
+};
