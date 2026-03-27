@@ -2,12 +2,10 @@ import React from "react";
 import { cn } from "@/lib/utils";
 
 const User = ({
-  name = "Molly Clark",
-  image = "https://img.daisyui.com/images/profile/demo/gordon@192.webp",
-  email = "molly@example.com",
-  online = true,
+  user,
   onClick,
   className,
+  online = false,
 }) => {
   return (
     <button
@@ -20,13 +18,13 @@ const User = ({
     >
       <div className={cn("avatar", online ? "avatar-online" : "avatar-offline")}>
         <div className="w-12 rounded-full">
-          <img src={image} alt={name} />
+          <img src={user.profilePic || "https://i.pinimg.com/736x/13/74/20/137420f5b9c39bc911e472f5d20f053e.jpg"} alt={user.name} />
         </div>
       </div>
 
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-semibold text-[#2e3f85]">{name}</p>
-        <p className="truncate text-xs text-[#6d7fbc]">{email}</p>
+        <p className="truncate text-sm font-semibold text-[#2e3f85]">{user.name}</p>
+        <p className="truncate text-xs text-[#6d7fbc]">{user.email}</p>
       </div>
     </button>
   );

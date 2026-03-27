@@ -43,11 +43,6 @@ const Signup = () => {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("messenger");
-    localStorage.removeItem("user-info");
-  };
-
   const passwordValue = watch("password", "");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -310,9 +305,6 @@ const Signup = () => {
                 className="btn mt-2 w-full rounded-xl border-0 bg-[#5f80ff] text-white shadow-[0_12px_25px_rgba(95,128,255,0.45)] hover:bg-[#4f73ff]"
               >
                 Sign Up
-              </button>
-              <button onClick={handleLogout} className="btn btn-secondary">
-                Logout
               </button>
 
               <p className="text-center text-sm text-[#6071b5]">
