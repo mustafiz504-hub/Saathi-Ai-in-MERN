@@ -46,10 +46,6 @@ const Login = () => {
     }
   };
 
-  const handleClearLocalStorage = () => {
-    localStorage.removeItem("messenger");
-    localStorage.removeItem("user-info");
-  };
 
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#d9e0ff] px-4 py-10">
@@ -184,9 +180,6 @@ const Login = () => {
               className="btn mt-2 w-full rounded-xl border-0 bg-[#5f80ff] text-white shadow-[0_12px_25px_rgba(95,128,255,0.45)] hover:bg-[#4f73ff]"
             >
               Login
-            </button>
-            <button onClick={handleClearLocalStorage} className="btn btn-secondary">
-              clear local storage
             </button>
 
             <p className="text-center text-sm text-[#6071b5]">
