@@ -7,24 +7,50 @@
 
 ---
 
-**Google Authentication ka Progress:**
+**Google Authentication: Client se Server tak ki Kahani (Detailed)**
 
-1.  **Client-Side Setup:** Humne `@react-oauth/google` library ka `useGoogleLogin` hook use kiya hai. Yeh hook React component ke andar Google login ka logic handle karta hai.
+Pehle hamara authentication sirf browser tak tha, par ab humne pura cycle complete kar liya hai:
 
-2.  **Login Flow:**
-   - Jab user "Login with Google" button pe click karta hai, to `googleLogin()` function call hota hai (jo `useGoogleLogin` hook se mila hai).
-   - Iske baad Google ka login screen (popup) open hota hai.
+1.  **Frontend ka role:** User jab Google button pe click karta hai, to browser use Google ke login page pe le jata hai. Wahan se ek temporary 'Authorization Code' milta hai.
+2.  **Server tak Code bhejna:** Hamara frontend uss code ko `/auth/google` API ke zariye backend (Node.js) ko bhejta hai.
+3.  **Google se handshake (Backend):** 
+    - Server uss code ko Google ke pass wapas bhejta hai aur kehta hai, "Bhai, ye code sahi hai? Iske badle mujhe User ki details do."
+    - Google verify karke `access_token` deta hai, jise use karke hum User ka **Naam, Email, aur Profile Picture** nikal lete hain.
+4.  **Database check:** Hum system me check karte hain ki ye user pehle kabhi aaya hai ya nahi. Agar pehle se entry hai to use login kar dete hain, nahi to naya account (`social-logins` collection me) create kar dete hain.
 
-3.  **Success & Response:**
-   - User jab successfully login kar leta hai, to `onSuccess` wala function trigger hota hai.
-   - Is function me hume Google se ek `authResult` object milta hai. Is object ke andar ek `code` property hoti hai.
-   - `flow: "auth-code"` setting ki wajah se hume yeh `code` mil raha hai.
+---
 
-4.  **Abhi Tak ka Status:**
-   - **Client-side authentication complete hai.** User Google se successfully authorize kar pa raha hai.
-   - Hume client-side par (console me) authorization `code` mil chuka hai.
+**Security Update: httpOnly Cookies (Ye kyu zaruri hai?)**
 
-5.  **Next Step (Jo karna baaki hai):**
-   - Abhi yeh `code` sirf client (browser) tak hai. Iska use karke **server-side** par user ki details (jaise naam, email, profile picture) nikalni hai.
-   - Iske liye, hume is `code` ko apne server (jo 'Server' folder me banega) pe ek API call ke through bhejna hoga.
-   - Server uss code ko Google ke server pe bhej kar `access_token` lega aur fir uss token se user ki profile details fetch karega.
+Login hone ke baad, humne normal local-storage ke bajaye **httpOnly Cookie** ka use kiya hai.
+- **Kyu?**: Local storage me token rakhne se hackers browser ki scripts use karke use chura sakte hain (XSS attack). 
+- **Fayda**: `httpOnly` flag ki wajah se browser ki JavaScript uss cookie ko 'dekh' ya 'read' nahi kar sakti. Sirf browser hi use automatically har request ke sath server pe bhejta hai. Isse hamara session ekdum secure ho gaya hai.
+
+---
+
+**Messaging System: Models aur unka Rishta**
+
+Humne 2 alag models banaye hain jo milkar chat chalate hain:
+
+1.  **Conversation Model (The Hub):** 
+    - Iska kaam hai ye record rakhna ki "Kaun log aapas me baat kar rahe hain?". 
+    - Jaise ki, "Mustafiz" aur "Anakin" ke beech ek conversation ID ban jayegi. Isme dono ki User IDs store hongi.
+    - Saath hi, ye conversation apne andar un saare Messages ki **List (Array)** rakhta hai jo in dono ne ek-dusre ko bheje hain.
+
+2.  **Message Model (The Data):**
+    - Har ek message (Jaise: "Hello, kaise ho?") yahan save hota hai.
+    - Isme ye bhi record hota hai ki ye message kisne bheja (senderId) aur kise mila (receiverId).
+
+3.  **Combine kaise hote hain?**: 
+    - Jab hum chat open karte hain, to server `Conversation` ko check karta hai aur `.populate("messages")` use karke uss array ke andar ki IDs ko real message text me convert karke frontend pe bhej deta hai.
+
+---
+
+**Current UI Status & Final Logic**
+
+- **Left Sidebar:** Saare users list ho rahe hain (`UseGetAllUsers` hook bypass ho kar filter laga kar).
+- **Right Chat Panel:** Header, Message list, aur Type box ready hain. Background image bhi laga di gayi hai.
+- **Data Flow:** Jab aap kisi user pe click karte ho, to uska ID backend pe jata hai aur hamara system puri chat history nikal deta hai.
+
+**Next Target: Socket.io (Real-Time Magic)**
+Abhi messages ko dekhne ke liye page refresh ya polling karni padti hai. Hamara agla kadam hai **Socket.io** setup karna. Isse messaging "Live" ho jayegi—jaise hi aap enter press karoge, doosre user ke screen pe bina refresh kiye message pop-up ho jayega!
