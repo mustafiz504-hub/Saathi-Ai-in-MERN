@@ -22,7 +22,8 @@ build/
 
 # Project Specific / Documentation
 Client/New folder/
-Server/projectOverview.txt
-git.read.txt
+Server/README.md
+git.txt
 message.txt
 padhai.txt
+PROJECT.MD
