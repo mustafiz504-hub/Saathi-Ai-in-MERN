@@ -1,5 +1,28 @@
+# Dependencies
 **/node_modules/
+
+# Environment / Secret Files
 **/.env
 **/.env.*
 client_secret_*.json
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build / Production
+dist/
+build/
+.next/
+
+# IDE / OS Files
+.DS_Store
+.vscode/
+
+# Project Specific / Documentation
 Client/New folder/
+Server/projectOverview.txt
+git.read.txt
+message.txt
+padhai.txt

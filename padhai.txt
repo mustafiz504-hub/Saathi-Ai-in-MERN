@@ -35,12 +35,27 @@ Ye ab tak ka sabse bada kaam tha. Humne client aur server ko ek dusre ke saath s
 
 ---
 
+### **6. 29 March 2026: Messaging System & Model Integration**
+Aaj humne **Saathi-Ai** ka core feature (Chating) implement kiya:
+- **Database Models**: 
+    - `message.model.js`: Isme har individual message (sender, receiver, content) store hoga.
+    - `conversation.model.js`: Ye "participants" (kaun kisse baat kar raha hai) aur unke beech ke saare "messages" ki list rakhta hai.
+- **Messaging Logic (Backend)**: 
+    - `sendMessage`: Ye controller check karta hai ki participants ke beech pehle se conversation hai ya nahi. Agar nahi hai, to nayi banata hai aur message save karta hai.
+    - `getMessages`: `.populate("messages")` ka use karke humne ensure kiya ki database se sirf IDs nahi balki pura message content (text, time) mil jaye.
+- **Frontend Refinements**: 
+    - `UseGetAllUsers`: Hook ko fix kiya taaki browser cookie automatically send ho aur user list bina kisi manual header ke fetch ho sake.
+    - `Left.jsx`: Sidebar user list ko map kiya taaki har signed-up user wahan dikhe.
+- **Documentation**: `message.txt` banaya taaki messaging flow aur models ka logic hamesha clear rahe.
+
+---
+
 ### **Current Tech Stack Summary:**
 1.  **Backend**: Node.js, Express, MongoDB (Database).
-2.  **Frontend**: React.js, Tailwind CSS (Styling), Redux (State Management).
-3.  **Auth**: Google OAuth (Social Login) + JWT (Session Security).
-4.  **State Management**: `useConversation` aur `useGetUsers` hooks jo project ko reactively update karte hain.
+2.  **Frontend**: React.js, Tailwind CSS (Styling), Axios (API calls).
+3.  **Auth**: HTTP-only JWT Cookies (Session Security) + Google OAuth.
+4.  **Messaging**: Conversation-based schema with automatic message population.
 
 ---
 **Next Step Recommendation**: 
-Ab aap messaging logic (Socket.io for real-time) par focus kar sakte hain taaki chat live ho jaye!
+Ab aap **Socket.io** setup kar sakte hain taaki chat "Real-time" ho jaye (bina page refresh kiye messages aayein aur jayein)!
