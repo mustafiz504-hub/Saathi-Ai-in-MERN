@@ -2,7 +2,7 @@ import React from "react";
 
 const Chatuser = () => {
   return (
-    <div className="flex items-center justify-between px-4 py-3 bg-white shadow-md border-b hover:bg-gray-100 cursor-pointer">
+    <div className="flex items-center justify-between px-4 py-3 bg-white/95 backdrop-blur-sm cursor-pointer transition-colors hover:bg-white">
       
       {/* Left Section */}
       <div className="flex items-center gap-3">

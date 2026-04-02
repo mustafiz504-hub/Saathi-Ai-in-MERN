@@ -2,6 +2,7 @@ import React from "react";
 import Search from "./Search";
 import User from "./User";
 import UseGetAllUsers from "@/context/useGetAllUsers";
+import Logout from "../left1/Logout";
 
 const Left = () => {
   const [allUsers, loading] = UseGetAllUsers();
@@ -10,8 +11,13 @@ const Left = () => {
   return (
     <div className="flex h-full flex-col">
       <div className="rounded-2xl bg-linear-to-br from-[#5a7cff] to-[#6c8dff] p-4 text-white">
-        <p className="text-xs tracking-[0.2em] text-white/85">MESSAGES</p>
-        <h2 className="mt-2 text-xl font-semibold">Chats</h2>
+        <div className="mb-4 flex items-center justify-between">
+          <div>
+            <p className="text-xs tracking-[0.2em] text-white/85">MESSAGES</p>
+            <h2 className="mt-2 text-xl font-semibold">Chats</h2>
+          </div>
+          <Logout />
+        </div>
         <Search />
       </div>
 
