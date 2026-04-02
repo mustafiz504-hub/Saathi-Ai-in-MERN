@@ -7,7 +7,6 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import Chat from "./components/Chat";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
-import Logout from "./Home/left1/Logout";
 import Left from "./Home/left/Left";
 import Right from "./Home/right/Right";
 import { useAuth } from "./context/AuthProvider";
@@ -43,11 +42,8 @@ const App = () => {
             authUser ? (
               <div className="h-screen w-screen overflow-hidden bg-[#d9e0ff]">
                 <div className="flex h-full w-full overflow-hidden bg-white">
-                  <aside className="flex h-full w-[30%] min-w-[280px] border-r border-[#e7ecff] bg-[#f7f9ff]">
-                    <div className="flex h-full w-[12%] min-w-10 flex-col items-center justify-end border-r border-[#e7ecff] px-1 py-4">
-                      <Logout />
-                    </div>
-                    <div className="min-h-0 flex-1 p-4">
+                  <aside className="flex h-full w-[27%] min-w-[265px] border-r border-[#e7ecff] bg-[#f7f9ff]">
+                    <div className="min-h-0 w-full flex-1 p-4">
                       <Left />
                     </div>
                   </aside>
