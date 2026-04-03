@@ -1,11 +1,11 @@
 import React from "react";
 import Search from "./Search";
 import User from "./User";
-import UseGetAllUsers from "@/context/useGetAllUsers";
+import useGetAllUsers from "@/context/useGetAllUsers";
 import Logout from "../left1/Logout";
 
 const Left = () => {
-  const [allUsers, loading] = UseGetAllUsers();
+  const [allUsers, loading] = useGetAllUsers();
   console.log(allUsers);
 
   return (
@@ -21,7 +21,7 @@ const Left = () => {
         <Search />
       </div>
 
-      <div className="mt-4 h-full space-y-2 overflow-y-auto pr-1">
+      <div className="mt-4 flex-1 space-y-2 overflow-y-auto pr-1">
         {loading ? (
           <div className="flex justify-center p-4 text-white/50 text-sm italic">Loading users...</div>
         ) : (

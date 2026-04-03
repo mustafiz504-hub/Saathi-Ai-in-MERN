@@ -13,13 +13,14 @@ const useGetmessage = () => {
         try {
           const response = await axios.get(
             `/message/get/${selectedConversation._id}`,
-            { withCredentials: true }
+            { withCredentials: true },
           );
           const data = response.data;
-          setMessages(Array.isArray(data) ? data : (data.messages || []));
-          setLoading(false);
+          setMessages(Array.isArray(data) ? data : data.messages || []);
         } catch (error) {
-          console.log("Error in useGetMessage:", error);
+          console.log("Error in Get Message:", error);
+        } finally {
+          setLoading(false);
         }
       }
     };

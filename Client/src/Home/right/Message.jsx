@@ -10,7 +10,7 @@ const Message = ({ message }) => {
   });
 
   return (
-    <div className="px-[5%] py-1">
+    <div className="px-[8%] py-1">
       <div
         className={`flex items-end gap-2 group ${
           itsme ? "justify-end" : "justify-start"
@@ -28,22 +28,23 @@ const Message = ({ message }) => {
 
         <div className="max-w-[80%]">
           <div
-            className={`flex gap-2 px-4 py-2.5 rounded-2xl shadow-sm ${
+            className={`flex items-end gap-2 px-4 py-2.5 rounded-2xl shadow-sm ${
               itsme
                 ? "bg-[#ffffff] text-blue-900 rounded-br-sm border border-blue-100/50"
                 : "bg-white text-gray-800 rounded-bl-sm ring-1 ring-gray-100"
             }`}
           >
             <p
-              className={`text-sm leading-relaxed ${
+              className={`text-sm leading-relaxed break-words ${
                 itsme ? "text-slate-800" : "text-gray-800"
               }`}
+              style={{ wordBreak: "break-word" }}
             >
               {message.message}
             </p>
 
             <div
-              className={`text-[10px] text-right mt-1.5 flex items-center justify-end gap-1 font-medium ${
+              className={`shrink-0 text-[10px] text-right mt-1.5 flex items-center justify-end gap-1 font-medium ${
                 itsme ? "text-blue-700/60" : "text-gray-400"
               }`}
             >
