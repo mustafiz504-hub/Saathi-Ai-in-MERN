@@ -2,9 +2,11 @@ import React, { useLayoutEffect, useRef } from "react";
 import Message from "./Message";
 import useGetmessage from "@/context/useGetMessage.js";
 import Spinner from "@/components/ui/Spinner";
+import useGetSocketMessage from "@/context/useGetSocketMessage.jsx";
 
 const Messages = () => {
   const { messages, loading } = useGetmessage();
+  useGetSocketMessage();
   const lastMsgRef = useRef();
 
   useLayoutEffect(() => {
