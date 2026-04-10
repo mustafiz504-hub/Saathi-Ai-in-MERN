@@ -28,7 +28,6 @@ const App = () => {
   const { authUser } = useAuth();
   console.log(authUser);
   return (
-    <BrowserRouter>
       <Routes>
         {/* <Route path="/login" element={<GoogleAuthWrapper />} /> */}
         {/* <Route path="/" element={<Navigate to="/login" />} /> */}
@@ -61,7 +60,7 @@ const App = () => {
         <Route path="/login" element={ authUser? <Navigate to="/" /> :  <Login />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
-    </BrowserRouter>
+  
   );  
 };
 

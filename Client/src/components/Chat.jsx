@@ -1,5 +1,5 @@
 import Left from "@/Home/left/Left";
-import Logout from "@/Home/left1/Logout";
+import Logout from "@/components/Logout";
 import Right from "@/Home/right/Right";
 import React from "react";
 import Signup from "./Signup";

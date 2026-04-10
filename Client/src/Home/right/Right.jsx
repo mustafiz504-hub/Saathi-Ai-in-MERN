@@ -9,7 +9,6 @@ import { useAuth } from "@/context/AuthProvider";
 
 const Right = () => {
   const { selectedConversation, setselectedConversation } = useConversation();
-
   useEffect(() => {
     // Unmount work (cleanup)
     return () => {

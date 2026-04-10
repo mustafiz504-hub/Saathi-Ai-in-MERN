@@ -7,8 +7,8 @@ import cors from "cors";
 import authRouter from "./routes/authRouter.js";
 import "./models/dbConnection.js";
 import messageRoute from "./routes/message.route.js";
+import { app, server } from "./SocketIO/server.js";
 
-const app = express();
 const PORT = process.env.PORT || 8080;
 
 const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || "http://localhost:4001";
@@ -30,6 +30,6 @@ app.get("/", (req, res) => {
   res.send("Hello From Auth Server!");
 });
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
