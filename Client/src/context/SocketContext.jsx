@@ -15,6 +15,12 @@ export const SocketProvider = ({ children }) => {
   const { authUser } = useAuth();
 
   useEffect(() => {
+    if (window.Notification && Notification.permission !== "granted") {
+      Notification.requestPermission();
+    }
+  }, []);
+
+  useEffect(() => {
     if (authUser) {
       const newSocket = io("http://127.0.0.1:8080", {
         query: {

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import Cookies from "js-cookies";
+import useConversation from "@/statemanage/useConversation";
 import api from "../../api";
 
 const UseGetAllUsers = () => {
-  const [allUsers, setAllUsers] = useState([]);
+  const { allUsers, setAllUsers } = useConversation();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {

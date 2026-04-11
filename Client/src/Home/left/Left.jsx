@@ -5,10 +5,23 @@ import useGetAllUsers from "@/context/useGetAllUsers";
 import Logout from "../../components/Logout";
 import { useAuth } from "@/context/AuthProvider";
 
+import useGetSocketMessage from "@/context/useGetSocketMessage";
+
 const Left = () => {
+  useGetSocketMessage();
   const [allUsers, loading] = useGetAllUsers();
+  const [search, setSearch] = React.useState("");
   const { authUser } = useAuth();
-  console.log(allUsers);
+
+  // Search logic: Filter users based on fullname or name
+  const filteredUsers = allUsers?.filter((user) => {
+    const term = search.toLowerCase();
+    return (
+      user.fullname?.toLowerCase().includes(term) ||
+      user.name?.toLowerCase().includes(term) ||
+      user.email?.toLowerCase().includes(term)
+    );
+  });
 
   return (
     <div className="flex h-full flex-col">
@@ -22,7 +35,7 @@ const Left = () => {
           </div>
           <Logout />
         </div>
-        <Search />
+        <Search search={search} setSearch={setSearch} />
       </div>
 
       <div className="mt-4 flex-1 space-y-2 overflow-y-auto pr-1">
@@ -30,10 +43,20 @@ const Left = () => {
           <div className="flex justify-center p-4 text-white/50 text-sm italic">
             Loading users...
           </div>
-        ) : (
-          allUsers?.map((user, index) => (
-            <User key={user._id || index} user={user} />
+        ) : filteredUsers?.length > 0 ? (
+          filteredUsers.map((user, index) => (
+            <User key={user._id || index} user={user} setSearch={setSearch} />
           ))
+        ) : (
+          <div className="flex min-h-[220px] flex-col items-center justify-center px-6 py-10 text-center">
+            <div className="mb-3 text-3xl">🔍</div>
+            <p className="text-base font-semibold text-gray-700">
+              User not found
+            </p>
+            <span className="mt-1 text-sm text-gray-400">
+              Try searching with another name
+            </span>
+          </div>
         )}
       </div>
     </div>
