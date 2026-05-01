@@ -94,10 +94,19 @@ export const getUserProfile = async (req, res) => {
     const filteredUsers = await UserModel2.find({
       _id: { $ne: loggedInUser },
     }).select("-password");
-    //"-password" isse hame password nahi milega jab ham data get karege
+    
+    // Add Nemo AI Bot to the list
+    const botUser = {
+      _id: "660c1e4e4e4e4e4e4e4e4e4e", // Specific hardcoded ID for Bot
+      name: "Nemo",
+      email: "nemo@bot.com",
+      profilePic: "https://cdn-icons-png.flaticon.com/512/4712/4712035.png",
+      isBot: true
+    };
+
     return res.status(200).json({
       message: "Users fetched successfully",
-      users: filteredUsers,
+      users: [botUser, ...filteredUsers],
     });
   } catch (error) {
     console.log("Error in allUsers Controller", error);

@@ -1,6 +1,9 @@
 import Conversation from "../models/conversation.model.js";
 import Message from "../models/message.model.js";
 import { getRecieverSocketId, io } from "../SocketIO/server.js";
+import { getAIResponse } from "../utils/gemini.js";
+
+const BOT_ID = "660c1e4e4e4e4e4e4e4e4e4e"; // Must match the one in user.controller.js
 
 export const sendMessage = async (req, res) => {
   //   console.log("message id => ", req.params.id, "message => ", req.body.message);
@@ -35,6 +38,35 @@ export const sendMessage = async (req, res) => {
 
     res.status(201).json({ message: "Message sent successfully", newMessage });
     console.log(newMessage);
+
+    // AI BOT RESPONSE LOGIC
+    if (recieverId === BOT_ID) {
+      // Emit typing start
+      const senderSocketId = getRecieverSocketId(senderId);
+      if (senderSocketId) {
+        io.to(senderSocketId).emit("showTyping", { senderId: BOT_ID });
+      }
+
+      const aiResponse = await getAIResponse(message);
+      
+      const botMessage = new Message({
+        senderId: BOT_ID,
+        recieverId: senderId,
+        message: aiResponse,
+      });
+
+      if (botMessage) {
+        conversation.messages.push(botMessage._id);
+      }
+
+      await Promise.all([conversation.save(), botMessage.save()]);
+
+      // Emit typing stop and then the message
+      if (senderSocketId) {
+        io.to(senderSocketId).emit("hideTyping", { senderId: BOT_ID });
+        io.to(senderSocketId).emit("newMessage", botMessage);
+      }
+    }
   } catch (error) {
     console.log("error in sending message" + error);
     res.status(500).json({ message: "Internal Server Error" });
