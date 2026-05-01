@@ -9,7 +9,7 @@ const User = ({ user, onClick, className, setSearch }) => {
   const isSelected = selectedConversation?._id === user?._id;
 
   const { onlineUsers, typingUsers } = useSocket();
-  const isOnline = onlineUsers.includes(user._id);
+  const isOnline = onlineUsers.includes(user._id) || user.isBot;
   const isTyping = typingUsers?.[user._id];
 
   // 2. Iss specific user ke notifications count karo
@@ -45,9 +45,16 @@ const User = ({ user, onClick, className, setSearch }) => {
       </div>
 
       <div className="min-w-0 flex-1">
-        <p className={cn("truncate text-sm font-bold", isSelected ? "text-white" : "text-gray-800")}>
-          {user.fullname || user.name}
-        </p>
+        <div className="flex items-center gap-1.5">
+          <p className={cn("text-sm font-bold", isSelected ? "text-white" : "text-gray-800")}>
+            {user.fullname || user.name}
+          </p>
+          {user.isBot && (
+            <span className="flex-shrink-0 bg-blue-600 text-[10px] text-white px-1.5 py-0.5 rounded-full font-bold uppercase tracking-tighter shadow-sm border border-white/20">
+              AI
+            </span>
+          )}
+        </div>
 
         <p className={cn("truncate text-xs font-medium", isTyping ? (isSelected ? "text-green-100" : "text-green-600") : isSelected ? "text-white/80" : isOnline ? "text-green-600" : "text-gray-500")}>
           {isTyping ? "Typing..." : isOnline ? "Online" : user.email}
