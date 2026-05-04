@@ -11,8 +11,9 @@ const useGetmessage = () => {
       setLoading(true);
       if (selectedConversation && selectedConversation._id) {
         try {
+          const BACKEND_URL = import.meta.env.PROD ? "https://saathi-ai-in-mern.onrender.com" : "";
           const response = await axios.get(
-            `/message/get/${selectedConversation._id}`,
+            `${BACKEND_URL}/message/get/${selectedConversation._id}`,
             { withCredentials: true },
           );
           const data = response.data;

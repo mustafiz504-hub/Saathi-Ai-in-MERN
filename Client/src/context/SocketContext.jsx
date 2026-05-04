@@ -22,7 +22,8 @@ export const SocketProvider = ({ children }) => {
 
   useEffect(() => {
     if (authUser) {
-      const newSocket = io("http://127.0.0.1:8080", {
+      const BACKEND_URL = import.meta.env.PROD ? "https://saathi-ai-in-mern.onrender.com" : "http://127.0.0.1:8080";
+      const newSocket = io(BACKEND_URL, {
         query: {
           userId: authUser.user._id,
         },

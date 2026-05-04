@@ -10,8 +10,9 @@ const useSendMessage = () => {
     setLoading(true);
     if (selectedConversation && selectedConversation._id) {
       try {
+        const BACKEND_URL = import.meta.env.PROD ? "https://saathi-ai-in-mern.onrender.com" : "";
         const res = await axios.post(
-          `/message/send/${selectedConversation._id}`,
+          `${BACKEND_URL}/message/send/${selectedConversation._id}`,
           { message },
           { withCredentials: true }
         );
