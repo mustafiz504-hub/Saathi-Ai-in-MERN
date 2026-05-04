@@ -10,7 +10,7 @@ const useSendMessage = () => {
     setLoading(true);
     if (selectedConversation && selectedConversation._id) {
       try {
-        const BACKEND_URL = import.meta.env.PROD ? "https://saathi-ai-in-mern.onrender.com" : "";
+        const BACKEND_URL = import.meta.env.PROD ? "" : "http://127.0.0.1:8080";
         const res = await axios.post(
           `${BACKEND_URL}/message/send/${selectedConversation._id}`,
           { message },

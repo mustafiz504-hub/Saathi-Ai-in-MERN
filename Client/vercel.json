@@ -1,3 +1,7 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [
+    { "source": "/auth/(.*)", "destination": "https://saathi-ai-in-mern.onrender.com/auth/$1" },
+    { "source": "/message/(.*)", "destination": "https://saathi-ai-in-mern.onrender.com/message/$1" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BACKEND_URL = import.meta.env.PROD ? "https://saathi-ai-in-mern.onrender.com" : "";
+const BACKEND_URL = import.meta.env.PROD ? "" : "http://127.0.0.1:8080";
 
 const api = axios.create({
   baseURL: `${BACKEND_URL}/auth`,
