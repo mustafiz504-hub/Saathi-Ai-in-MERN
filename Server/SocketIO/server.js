@@ -8,7 +8,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: process.env.CLIENT_ORIGIN || "http://localhost:4001",
+    origin: process.env.CLIENT_ORIGIN ? process.env.CLIENT_ORIGIN.split(",") : ["http://localhost:4001"],
     methods: ["GET", "POST"],
     credentials: true,
   },

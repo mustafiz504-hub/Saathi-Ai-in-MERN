@@ -11,7 +11,7 @@ import { app, server } from "./SocketIO/server.js";
 
 const PORT = process.env.PORT || 8080;
 
-const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || "http://localhost:4001";
+const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN ? process.env.CLIENT_ORIGIN.split(",") : ["http://localhost:4001"];
 
 app.use(express.json());
 
