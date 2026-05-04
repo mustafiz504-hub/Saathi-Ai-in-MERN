@@ -1,5 +1,6 @@
 import React from "react";
 import useConversation from "@/statemanage/useConversation";
+import nemoDp from "@/assets/nemo_no_dots_dp.svg";
 
 const Message = ({ message }) => {
   const { selectedConversation } = useConversation();
@@ -10,7 +11,9 @@ const Message = ({ message }) => {
   const fallbackPic = "https://i.pinimg.com/736x/13/74/20/137420f5b9c39bc911e472f5d20f053e.jpg";
 
   // Real profile pics nikalo (with fallback)
-  const chatUserProfilePic = selectedConversation?.profilePic || fallbackPic;
+  const chatUserProfilePic = selectedConversation?.isBot
+    ? nemoDp
+    : (selectedConversation?.profilePic || fallbackPic);
   const myProfilePic = authUser?.user?.profilePic || fallbackPic;
 
   // Time format karne ka function

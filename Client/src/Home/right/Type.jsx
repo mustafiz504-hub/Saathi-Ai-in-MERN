@@ -5,28 +5,36 @@ import { useSocket } from "@/context/SocketContext";
 import useConversation from "@/statemanage/useConversation";
 import { useAuth } from "@/context/AuthProvider";
 
+const GREETING_WORDS = ["hi", "hello", "hey", "hii", "helo", "namaste", "hiya", "yo"];
+
 const Type = () => {
   const { loading, sendMessage } = useSendMessage();
   const [message, setMessage] = useState("");
   const { socket } = useSocket();
-  const { selectedConversation } = useConversation();
+  const { selectedConversation, setBotEmotion } = useConversation();
   const { authUser } = useAuth();
   const typingTimeoutRef = useRef(null);
+  const emotionResetRef = useRef(null);
+  const slowResponseRef = useRef(null);
+
+  // Helper: set emotion and reset to neutral after `delay` ms
+  const setEmotionWithReset = (emotion, delay = 3000) => {
+    clearTimeout(emotionResetRef.current);
+    setBotEmotion(emotion);
+    emotionResetRef.current = setTimeout(() => setBotEmotion("neutral"), delay);
+  };
 
   const handleInputChange = (e) => {
     setMessage(e.target.value);
 
     if (socket && selectedConversation && authUser) {
-      // Emit typing event
       socket.emit("typing", {
         senderId: authUser.user._id,
         receiverId: selectedConversation._id,
       });
 
-      // Clear existing timeout
       if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
 
-      // Set timeout to emit stopTyping
       typingTimeoutRef.current = setTimeout(() => {
         socket.emit("stopTyping", {
           senderId: authUser.user._id,
@@ -48,8 +56,39 @@ const Type = () => {
       if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
     }
 
-    await sendMessage(message);
-    setMessage("");
+    // Emotion logic only for bot conversations
+    if (selectedConversation?.isBot) {
+      // Check for greeting
+      const trimmed = message.trim().toLowerCase();
+      const isGreeting = GREETING_WORDS.some(w => trimmed === w || trimmed.startsWith(w + " "));
+
+      if (isGreeting) {
+        setBotEmotion("glee");
+      } else {
+        setBotEmotion("focused");
+      }
+
+      // If response takes longer than 5s → sleepy
+      slowResponseRef.current = setTimeout(() => {
+        setBotEmotion("sleepy");
+      }, 5000);
+    }
+
+    try {
+      await sendMessage(message);
+      setMessage("");
+
+      if (selectedConversation?.isBot) {
+        clearTimeout(slowResponseRef.current);
+        setEmotionWithReset("happy", 3000);
+      }
+    } catch {
+      if (selectedConversation?.isBot) {
+        clearTimeout(slowResponseRef.current);
+        setEmotionWithReset("worried", 3000);
+      }
+      setMessage("");
+    }
   };
 
   return (
@@ -80,3 +119,4 @@ const Type = () => {
 };
 
 export default Type;
+

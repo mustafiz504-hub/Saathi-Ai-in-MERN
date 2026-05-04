@@ -1,9 +1,9 @@
 import useConversation from "@/statemanage/useConversation";
 import { useSocket } from "@/context/SocketContext";
-import BotEyeAvatar from "../../components/BotEyeAvatar";
+import { NemoEyesCanvas } from "../../components/NemoEyesCanvas";
 
 const Chatuser = () => {
-  const { selectedConversation } = useConversation();
+  const { selectedConversation, botEmotion } = useConversation();
   console.log("Chatuser", selectedConversation);
    const { onlineUsers, typingUsers } = useSocket();
    const isOnline = onlineUsers.includes(selectedConversation?._id) || selectedConversation?.isBot;
@@ -14,16 +14,28 @@ const Chatuser = () => {
       {/* Left Section */}
       <div className="flex items-center gap-3">
         <div
-          className={`avatar ${isOnline ? "avatar-online" : "avatar-offline"}`}
+          className={`avatar ${!selectedConversation?.isBot && isOnline ? "avatar-online" : ""}`}
         >
-          <div className="w-10 rounded-full flex items-center justify-center">
+          <div
+            style={{
+              width: 42, height: 42,
+              borderRadius: 10,
+              overflow: "hidden",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             {selectedConversation?.isBot ? (
-              <BotEyeAvatar 
-                mood={isTyping ? "thinking" : "idle"} 
-                size="w-10 h-10" 
-              />
+              <div style={{ zoom: 0.21, lineHeight: 0 }}>
+                <NemoEyesCanvas
+                  emotion={isTyping ? "focused" : botEmotion}
+                  size="md"
+                />
+              </div>
             ) : (
               <img
+                className="w-10 h-10 rounded-full object-cover"
                 src={
                   selectedConversation?.profilePic ||
                   "https://i.pinimg.com/736x/13/74/20/137420f5b9c39bc911e472f5d20f053e.jpg"

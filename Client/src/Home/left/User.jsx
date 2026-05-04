@@ -2,6 +2,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import useConversation from "@/statemanage/useConversation";
 import { useSocket } from "@/context/SocketContext";
+import nemoDp from "@/assets/nemo_no_dots_dp.svg";
 
 const User = ({ user, onClick, className, setSearch }) => {
   // 1. notifications aur setNotifications ko nikalo
@@ -38,7 +39,7 @@ const User = ({ user, onClick, className, setSearch }) => {
       <div className={cn("avatar", isOnline ? "avatar-online" : "avatar-offline")}>
         <div className="w-12 rounded-full relative">
           <img
-            src={user.profilePic || "https://i.pinimg.com/736x/13/74/20/137420f5b9c39bc911e472f5d20f053e.jpg"}
+            src={user.isBot ? nemoDp : (user.profilePic || "https://i.pinimg.com/736x/13/74/20/137420f5b9c39bc911e472f5d20f053e.jpg")}
             alt={user.fullname || user.name}
           />
         </div>

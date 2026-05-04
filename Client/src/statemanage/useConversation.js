@@ -24,6 +24,10 @@ const useConversation = create((set) => ({
   allUsers: [],
   setAllUsers: (allUsers) => set({ allUsers }),
   // --------------------------------------------
+
+  // NemoEyes emotion state
+  botEmotion: "neutral",
+  setBotEmotion: (botEmotion) => set({ botEmotion }),
 }));
 
 export default useConversation;
