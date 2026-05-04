@@ -5,6 +5,13 @@ import { useSocket } from "@/context/SocketContext";
 import useConversation from "@/statemanage/useConversation";
 import { useAuth } from "@/context/AuthProvider";
 
+// All 16 NemoEyes emotions — exact match or contained in message
+const NEMO_EMOTIONS = [
+  "neutral", "happy", "glee", "sad", "worried", "angry",
+  "furious", "surprised", "sleepy", "focused", "confused",
+  "love", "suspicious", "skeptic", "awe", "scared",
+];
+
 const GREETING_WORDS = ["hi", "hello", "hey", "hii", "helo", "namaste", "hiya", "yo"];
 
 const Type = () => {
@@ -25,7 +32,8 @@ const Type = () => {
   };
 
   const handleInputChange = (e) => {
-    setMessage(e.target.value);
+    const val = e.target.value;
+    setMessage(val);
 
     if (socket && selectedConversation && authUser) {
       socket.emit("typing", {

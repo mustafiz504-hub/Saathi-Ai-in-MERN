@@ -8,16 +8,17 @@ const BOT_ID = "660c1e4e4e4e4e4e4e4e4e4e";
 const detectEmotion = (text = "") => {
   const t = text.toLowerCase();
 
-  if (/sad beep|dukhi|rona|kharab|bahut bura|rough tha|heavy|takleef/.test(t)) return "sad";
-  if (/aw\.|aw,|aw\.\.\./.test(t)) return "sad";
-  if (/tiny happy|hehe|haha|wohoo|mast|khush|amazing|great|bahut accha|shukriya|thank/.test(t)) return "happy";
-  if (/namaste|hello|hi |hii|hey |welcome|aa gaye/.test(t)) return "glee";
+  // Check love FIRST before aw/sad patterns (bot often says "aw... pyaar ki baat")
   if (/love|pyaar|dil|❤|💕|💖/.test(t)) return "love";
+  if (/hehe|haha|wohoo|mast|khush|amazing|great|bahut accha|shukriya|thank/.test(t)) return "happy";
+  if (/namaste|hello|hi |hii|hey |welcome|aa gaye/.test(t)) return "glee";
+  if (/dukhi|rona|kharab|bahut bura|rough tha|heavy|takleef/.test(t)) return "sad";
+  if (/\baw\b/.test(t)) return "sad";
   if (/gussa|angry|frustrated|heat level|pareshaan/.test(t)) return "worried";
   if (/processing|soch|dekh|samajh|let me|try karte|solve/.test(t)) return "focused";
   if (/confused|samajh nahi|kya matlab|mujhe nahi pata/.test(t)) return "confused";
   if (/quiet mode|low energy|thaka|rest|neend/.test(t)) return "sleepy";
-  if (/wow|waah|surprised|sach mein|really/.test(t)) return "surprised";
+  if (/wow|waah|sach mein|really/.test(t)) return "surprised";
   if (/careful|dhyan|suspicious|sure hai/.test(t)) return "suspicious";
   return "neutral";
 };
