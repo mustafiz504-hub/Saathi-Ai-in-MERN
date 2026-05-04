@@ -22,6 +22,10 @@ const UseGetAllUsers = () => {
         setAllUsers(response.data.users);
       } catch (error) {
         console.log("Error in get all users:", error);
+        if (error.response && error.response.status === 401) {
+          localStorage.removeItem("messenger");
+          window.location.reload();
+        }
       } finally {
         setLoading(false);
       }
