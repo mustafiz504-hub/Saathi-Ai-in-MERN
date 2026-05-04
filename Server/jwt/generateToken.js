@@ -5,8 +5,8 @@ export const createTokenAndSaveCookie = (userId, res) => {
     expiresIn: process.env.JWT_TIMEOUT,
   });
   res.cookie("jwt", token, {
-    httpOnly: true, //ye bachayega xss attack se
-    sameSite: true, // ye hame secure rakhega
-    secure: "strict", //ye hame secure rakhega csrs attack se
+    httpOnly: true,
+    sameSite: "none", // required for cross-domain
+    secure: true, // required for sameSite none
   });
 };
